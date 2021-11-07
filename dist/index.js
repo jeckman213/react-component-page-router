@@ -14,7 +14,8 @@ var GetAllComponents = function () {
             .replace(/js|jsx/, '');
         var CompTag = componentConfig.default;
         var path = filename
-            .replace(/\./, '')
+            .replace(/\.js|\.jsx/, '')
+            .replace('.', '')
             .toLowerCase();
         pages.push(new Page_1.default(path, componentName, CompTag));
     });
@@ -24,7 +25,8 @@ function GetAllRoutes() {
     var allComponents = GetAllComponents();
     var compElements = [];
     allComponents.forEach(function (page) {
-        compElements.push(React.createElement(react_router_dom_1.Route, { path: page.path, element: page.component }, null));
+        var comp = page.component;
+        compElements.push(React.createElement(react_router_dom_1.Route, { path: page.path, key: page.label, element: React.createElement(comp) }, null));
     });
     var routesElement = React.createElement(react_router_dom_1.Routes, null, compElements);
     return React.createElement(react_router_dom_1.BrowserRouter, null, routesElement);

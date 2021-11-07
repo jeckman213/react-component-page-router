@@ -12,9 +12,10 @@ const GetAllComponents = () : Page[] => {
             .replace(/\.\w+$/, '')
             .replace(/js|jsx/, '');
         const CompTag = componentConfig.default
-        const path: string = filename
-            .replace(/\./, '')
-            .toLowerCase();
+        var path = filename
+            .replace(/\.js|\.jsx/, '')
+            .replace('.', '')
+            .toLowerCase()
 
         pages.push(
             new Page(
@@ -29,12 +30,13 @@ const GetAllComponents = () : Page[] => {
     return pages;
 }
 
-export default function GetAllRoutes() : JSX.Element {
+export default function PageRouter() : JSX.Element {
     var allComponents: Page[] = GetAllComponents();
     
     var compElements: JSX.Element[] = []
     allComponents.forEach(page => {
-        compElements.push(React.createElement(Route, {path: page.path, element: page.component}, null))
+        let comp: React.FunctionComponent|React.ComponentClass = page.component;
+        compElements.push(React.createElement(Route, {path: page.path, key: page.label, element: React.createElement(comp)}, null))
     })
     let routesElement = React.createElement(Routes, null, compElements)
     return React.createElement(BrowserRouter, null, routesElement);
