@@ -1,16 +1,14 @@
 import React = require('react');
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import RouterObject from './RouterObject';
 import Page from './Page';
 
-const GetAllComponents = () : Page[] => {
+export function GetPages(): Page[] {
     var pages: Page[] = [];
-    const requiredComponents = require.context(`../../../src/Components`, true, /js$/);
+    const requiredComponents = require.context(`../../../src/Components`, true, /js$|jsx$|tsx$/);
     requiredComponents.keys().forEach((filename: string) => {
         const componentConfig = requiredComponents(filename);
-        const componentName: string = filename
-            .replace(/^\.\//, '')
-            .replace(/\.\w+$/, '')
-            .replace(/js|jsx/, '');
+        const componentName: string|undefined = filename.replace(/.js$|.jsx$|.tsx$/, '').split('/').pop();
         const CompTag = componentConfig.default
         var path = filename
             .replace(/\.js|\.jsx/, '')
@@ -20,7 +18,7 @@ const GetAllComponents = () : Page[] => {
         pages.push(
             new Page(
                 path,
-                componentName,
+                `${componentName}`,
                 CompTag
             )
         );
@@ -30,14 +28,22 @@ const GetAllComponents = () : Page[] => {
     return pages;
 }
 
-export default function PageRouter() : JSX.Element {
-    var allComponents: Page[] = GetAllComponents();
-    
-    var compElements: JSX.Element[] = []
-    allComponents.forEach(page => {
-        let comp: React.FunctionComponent|React.ComponentClass = page.component;
-        compElements.push(React.createElement(Route, {path: page.path, key: page.label, element: React.createElement(comp)}, null))
-    })
-    let routesElement = React.createElement(Routes, null, compElements)
-    return React.createElement(BrowserRouter, null, routesElement);
+type PageRouterProps = {
+    children: JSX.Element[]
+}
+export function PageRouter(props: PageRouterProps) : JSX.Element {
+    return RouterObject({children: props.children});
+}
+
+export function PageLinks(): JSX.Element[] {
+    var allPages: Page[] = GetPages();
+
+    var linkElements: JSX.Element[] = [];
+    allPages.forEach(page => {
+        linkElements.push(
+            React.createElement(Link, { to:page.path }, page.label)
+        );
+    });
+
+    return linkElements;
 }
