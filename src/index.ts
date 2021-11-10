@@ -12,9 +12,20 @@ import PageRouterProps from './types/PageRouterProps';
  */
 export function GetPages(): Page[] {
     var pages: Page[] = [];
-    var requiredComponents = require.context(`../../../src/pages`, true, /js$|jsx$|tsx$/);
-    if (requiredComponents.length === 0) {
-        requiredComponents = require.context(`../../../pages`, true, /js$|jsx$|tsx$/);
+
+    var requiredComponents: __WebpackModuleApi.RequireContext;
+    try {
+        requiredComponents = require.context(`../../../src/pages`, true, /js$|jsx$|tsx$/);
+    }
+    catch (e) {
+        try {
+            requiredComponents = require.context(`../../../pages`, true, /js$|jsx$|tsx$/);
+        }
+        catch (e) {
+            throw Error("Failed to get pages directory. Might be missing for src.\
+            'pages' direction should be in one of two paths of react or nextjs project:\n\
+            ~/src/pages || ~/pages");
+        }
     }
     requiredComponents.keys().forEach((filename: string) => {
         const componentConfig = requiredComponents(filename);

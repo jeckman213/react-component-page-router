@@ -13,9 +13,19 @@ var Page_1 = require("./Page");
  */
 function GetPages() {
     var pages = [];
-    var requiredComponents = require.context("../../../src/pages", true, /js$|jsx$|tsx$/);
-    if (requiredComponents.length === 0) {
-        requiredComponents = require.context("../../../pages", true, /js$|jsx$|tsx$/);
+    var requiredComponents;
+    try {
+        requiredComponents = require.context("../../../src/pages", true, /js$|jsx$|tsx$/);
+    }
+    catch (e) {
+        try {
+            requiredComponents = require.context("../../../pages", true, /js$|jsx$|tsx$/);
+        }
+        catch (e) {
+            throw Error("Failed to get pages directory. Might be missing for src.\
+            'pages' direction should be in one of two paths of react or nextjs project:\n\
+            ~/src/pages || ~/pages");
+        }
     }
     requiredComponents.keys().forEach(function (filename) {
         var componentConfig = requiredComponents(filename);
