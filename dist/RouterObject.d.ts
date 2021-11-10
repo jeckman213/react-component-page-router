@@ -1,6 +1,3 @@
 /// <reference types="react" />
-declare type RouterObjectProps = {
-    children: JSX.Element[];
-};
-export default function RouterObject(props: RouterObjectProps): JSX.Element;
-export {};
+import PageRouterProps from './types/PageRouterProps';
+export default function RouterObject(props: PageRouterProps): JSX.Element;
