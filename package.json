@@ -1,7 +1,7 @@
 {
   "name": "react-component-page-router",
-  "version": "1.0.3",
-  "description": "",
+  "version": "1.1.0",
+  "description": "Simple module/lib that sets up react-router-dom paths & components for your React project. Looks through file structure ~/src/pages and imports all default components from js,jsx,tsx files.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -9,8 +9,9 @@
     "build": "tsc",
     "prepublish": "npm run build"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "jeckman213",
+  "homepage": "https://github.com/jeckman213/react-component-page-router",
+  "license": "MIT",
   "dependencies": {
     "@types/jest": "^27.0.2",
     "@types/react-dom": "^17.0.11",
