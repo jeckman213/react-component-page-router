@@ -13,11 +13,12 @@ export default function RouterObject(props: PageRouterProps) {
 
     return (
         <BrowserRouter>
+
+            { props.children }
+
             <Routes>
                 { routes }
             </Routes>
-
-            { props.children }
 
         </BrowserRouter>
     );

@@ -10,6 +10,6 @@ function RouterObject(props) {
         var comp = page.component;
         return ((0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: page.path, element: (0, react_1.createElement)(comp) }, void 0));
     });
-    return ((0, jsx_runtime_1.jsxs)(react_router_dom_1.BrowserRouter, { children: [(0, jsx_runtime_1.jsx)(react_router_dom_1.Routes, { children: routes }, void 0), props.children] }, void 0));
+    return ((0, jsx_runtime_1.jsxs)(react_router_dom_1.BrowserRouter, { children: [props.children, (0, jsx_runtime_1.jsx)(react_router_dom_1.Routes, { children: routes }, void 0)] }, void 0));
 }
 exports.default = RouterObject;

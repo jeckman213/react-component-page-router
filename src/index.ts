@@ -28,19 +28,36 @@ export function GetPages(): Page[] {
         }
     }
     requiredComponents.keys().forEach((filename: string) => {
-        const componentConfig = requiredComponents(filename);
-        const componentName: string|undefined = filename.replace(/.js$|.jsx$|.tsx$/, '').split('/').pop();
-        const CompTag = componentConfig.default
-        var path = filename
-            .replace(/\.js|\.jsx/, '')
-            .replace('.', '')
-            .toLowerCase()
+        // Split up path by '/' for component path and name
+        var splitPath: string[]|undefined = filename.replace(/.js$|.jsx$|.tsx$/, '').split('/');
+        
+        // Component name default to file name without extension
+        var componentName: string|undefined = splitPath[splitPath?.length - 1].replace('/', '');
 
+        // Component path default to path after 'pages' folder
+        var componentPath: string = filename
+                .replace(/\.js|\.jsx/, '')
+                .replace('.', '')
+                .toLowerCase()
+        
+        // Component name is index
+        // then component is base path of folder/directory
+        // similiar to nextjs routing
+        if (componentName === "index") {
+            componentPath = componentPath.replace('/index', '');
+            componentName = splitPath[splitPath?.length - 2].replace('/', '');
+        }
+
+        // Import actual component react element
+        const componentConfig = requiredComponents(filename);
+        const componentTag = componentConfig.default
+
+        // Create page
         pages.push(
             new Page(
-                path,
-                `${componentName}`,
-                CompTag
+                componentPath as string,
+                componentName as string,
+                componentTag
             )
         );
         

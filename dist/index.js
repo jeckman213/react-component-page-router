@@ -28,14 +28,27 @@ function GetPages() {
         }
     }
     requiredComponents.keys().forEach(function (filename) {
-        var componentConfig = requiredComponents(filename);
-        var componentName = filename.replace(/.js$|.jsx$|.tsx$/, '').split('/').pop();
-        var CompTag = componentConfig.default;
-        var path = filename
+        // Split up path by '/' for component path and name
+        var splitPath = filename.replace(/.js$|.jsx$|.tsx$/, '').split('/');
+        // Component name default to file name without extension
+        var componentName = splitPath[(splitPath === null || splitPath === void 0 ? void 0 : splitPath.length) - 1].replace('/', '');
+        // Component path default to path after 'pages' folder
+        var componentPath = filename
             .replace(/\.js|\.jsx/, '')
             .replace('.', '')
             .toLowerCase();
-        pages.push(new Page_1.default(path, "" + componentName, CompTag));
+        // Component name is index
+        // then component is base path of folder/directory
+        // similiar to nextjs routing
+        if (componentName === "index") {
+            componentPath = componentPath.replace('/index', '');
+            componentName = splitPath[(splitPath === null || splitPath === void 0 ? void 0 : splitPath.length) - 2].replace('/', '');
+        }
+        // Import actual component react element
+        var componentConfig = requiredComponents(filename);
+        var componentTag = componentConfig.default;
+        // Create page
+        pages.push(new Page_1.default(componentPath, componentName, componentTag));
     });
     return pages;
 }
