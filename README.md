@@ -59,3 +59,5 @@ If error throw about `~/src/pages` make sure you have created the `pages` direct
 ## Author(s)
 
 ##### Jonathan Eckman- [Github](https://github.com/jeckman213) - [Email](mailto:jeckman213@gmail.com?subject=Comment:react-component-page-router)
+
+First real open source code. Open for comments and suggestions :)
