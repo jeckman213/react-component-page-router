@@ -40,16 +40,20 @@ export default Nav;
 
 ##### Notes:
 
-Pages will be routed to their relative paths to 'pages' directory (including sub-paths/directories).
-ex. `~/src/pages/Home.js` --> `https://hostname.com/home`
-ex. `~/src/pages/Dashboard/settings.js` --> `https://hostname.com/dashboard/settings`
+* Pages will be routed to their relative paths to 'pages' directory (including sub-paths/directories).
 
-Files with name `index` will be routed to directory path
-ex. `~/src/pages/Auth/Login/index.js` --> `https://hostname.com/auth/login`
+  ex. `~/src/pages/Home.js` --> `https://hostname.com/home`
+
+  ex. `~/src/pages/Dashboard/settings.js` --> `https://hostname.com/dashboard/settings`
+
+* Files with name `index` will be routed to directory path
+
+  ex. `~/src/pages/Auth/Login/index.js` --> `https://hostname.com/auth/login`
 
 ## Help
 
 If error throw about `~/src/pages` make sure you have created the `pages` directory in the correct place.
+
 `~/` should be wherever your project's `node_modules` are located.
 
 ## Author(s)
