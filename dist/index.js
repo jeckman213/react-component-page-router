@@ -33,6 +33,9 @@ function GetPages() {
         // We ignore anything that start with '_' i.e. _index.js, _test.ts, /_somepath/something.js, etc.
         if (splitPath.some(function (s) { return s.startsWith('_'); }))
             return;
+        // Import actual component react element
+        var componentConfig = requiredComponents(filename);
+        var componentTag = componentConfig.default;
         // Component name default to file name without extension
         var componentName = splitPath[(splitPath === null || splitPath === void 0 ? void 0 : splitPath.length) - 1].replace('/', '');
         // Component path default to path after 'pages' folder
@@ -46,10 +49,11 @@ function GetPages() {
         if (componentName === "index") {
             componentPath = componentPath.replace('/index', '');
             componentName = splitPath[(splitPath === null || splitPath === void 0 ? void 0 : splitPath.length) - 2];
+            // For the case that this is index.js of pages directory a.k.a https://hostname.com/
+            if (componentName === '' || componentName === '.') {
+                componentName = componentConfig.default.name;
+            }
         }
-        // Import actual component react element
-        var componentConfig = requiredComponents(filename);
-        var componentTag = componentConfig.default;
         // Create page
         pages.push(new Page_1.default(componentPath, componentName, componentTag));
     });
@@ -62,7 +66,6 @@ exports.GetPages = GetPages;
  * @returns A Page Router JSX Element
  */
 function PageRouter(props) {
-    // return RouterObject({children: props.children});
     return (0, react_1.createElement)(RouterObject_1.default, { children: props.children });
 }
 exports.PageRouter = PageRouter;

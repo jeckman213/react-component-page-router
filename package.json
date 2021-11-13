@@ -1,6 +1,6 @@
 {
   "name": "react-component-page-router",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Simple module/lib that sets up react-router-dom paths & components for your React project. Looks through file structure ~/src/pages and imports all default components from js,jsx,tsx files.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
