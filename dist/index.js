@@ -30,6 +30,9 @@ function GetPages() {
     requiredComponents.keys().forEach(function (filename) {
         // Split up path by '/' for component path and name
         var splitPath = filename.replace(/.js$|.jsx$|.tsx$/, '').split('/');
+        // We ignore anything that start with '_' i.e. _index.js, _test.ts, /_somepath/something.js, etc.
+        if (splitPath.some(function (s) { return s.startsWith('_'); }))
+            return;
         // Component name default to file name without extension
         var componentName = splitPath[(splitPath === null || splitPath === void 0 ? void 0 : splitPath.length) - 1].replace('/', '');
         // Component path default to path after 'pages' folder
@@ -42,7 +45,7 @@ function GetPages() {
         // similiar to nextjs routing
         if (componentName === "index") {
             componentPath = componentPath.replace('/index', '');
-            componentName = splitPath[(splitPath === null || splitPath === void 0 ? void 0 : splitPath.length) - 2].replace('/', '');
+            componentName = splitPath[(splitPath === null || splitPath === void 0 ? void 0 : splitPath.length) - 2];
         }
         // Import actual component react element
         var componentConfig = requiredComponents(filename);
@@ -59,7 +62,8 @@ exports.GetPages = GetPages;
  * @returns A Page Router JSX Element
  */
 function PageRouter(props) {
-    return (0, RouterObject_1.default)({ children: props.children });
+    // return RouterObject({children: props.children});
+    return (0, react_1.createElement)(RouterObject_1.default, { children: props.children });
 }
 exports.PageRouter = PageRouter;
 /**

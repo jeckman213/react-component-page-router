@@ -50,6 +50,11 @@ export default Nav;
 
   ex. `~/src/pages/Auth/Login/index.js` --> `https://hostname.com/auth/login`
 
+* Files & directories starting with `_` will be ignored and treated as private
+
+  ex. `~/src/pages/_partials/navigation.js` --> ignored
+  ex. `~/src/pages/Dashboard/_graph.js` --> ignored
+
 ## Help
 
 If error throw about `~/src/pages` make sure you have created the `pages` directory in the correct place.
@@ -61,3 +66,5 @@ If error throw about `~/src/pages` make sure you have created the `pages` direct
 ##### Jonathan Eckman- [Github](https://github.com/jeckman213) - [Email](mailto:jeckman213@gmail.com?subject=Comment:react-component-page-router)
 
 First real open source code. Open for comments and suggestions :)
+
+Idea loosely based off of nextjs routing but logic and framework is completely different

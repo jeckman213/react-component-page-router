@@ -30,6 +30,9 @@ export function GetPages(): Page[] {
     requiredComponents.keys().forEach((filename: string) => {
         // Split up path by '/' for component path and name
         var splitPath: string[]|undefined = filename.replace(/.js$|.jsx$|.tsx$/, '').split('/');
+
+        // We ignore anything that start with '_' i.e. _index.js, _test.ts, /_somepath/something.js, etc.
+        if (splitPath.some(s => s.startsWith('_'))) return;
         
         // Component name default to file name without extension
         var componentName: string|undefined = splitPath[splitPath?.length - 1].replace('/', '');
@@ -45,7 +48,7 @@ export function GetPages(): Page[] {
         // similiar to nextjs routing
         if (componentName === "index") {
             componentPath = componentPath.replace('/index', '');
-            componentName = splitPath[splitPath?.length - 2].replace('/', '');
+            componentName = splitPath[splitPath?.length - 2];
         }
 
         // Import actual component react element
@@ -72,7 +75,8 @@ export function GetPages(): Page[] {
  * @returns A Page Router JSX Element
  */
 export function PageRouter(props: PageRouterProps) : JSX.Element {
-    return RouterObject({children: props.children});
+    // return RouterObject({children: props.children});
+    return createElement(RouterObject, {children: props.children});
 }
 
 /**
